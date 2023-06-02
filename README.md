@@ -1,0 +1,1 @@
+A project about what you should wear depending on the weather in the place you are in.
