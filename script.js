@@ -15,20 +15,19 @@ function findTemp() {
 }
 
 function displayTemp(data) {
+   console.log(data)
    let today = new Date();
+   let hourOffset = today.getTimezoneOffset() / 60;      // the hours of offset from GMT
    let temp = data.hourly.temperature_2m
    let tempAvg = temp.reduce((a, b) => a + b) / temp.length
-   let time = data.hourly.time
    
-   document.getElementById("averageTemp").innerHTML = tempAvg
+   document.getElementById("averageTemp").innerHTML = tempAvg          // + " " + data.timezone + "+" + (-1*hourOffset)
 
-   // find the current time by parsing and then verifying it with our current time
-   for (let i = 0; i < time.length; i++) {
-      let curr = time[i]
-      let currParsed = parseInt(curr.substring(curr.length - 5, curr.length - 3))
-
-      if (today.getHours() == currParsed) {
-         document.getElementById("currentTemp").innerHTML = temp[i] 
-      }
-   }
+   /* 
+    * account for GMT -> current time zone by using the offset.
+    * since the .getHours() function is corresponds to the temperature
+    * 
+    * edge case: before a day and after a day
+   */
+   document.getElementById("currentTemp").innerHTML = temp[ today.getHours() + hourOffset ]
 }
