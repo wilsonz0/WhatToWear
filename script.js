@@ -3,6 +3,9 @@ let topBottom   = ['thick', 'medium', 'thin', 'short', 'short'];
 
 document.getElementById('submit').addEventListener("click", findTemp)
 
+/* 
+ * Given the latitude and longtitude, fetch one day weather data 
+*/
 function findTemp() {
    let lat = document.getElementById('latitude').value
    let long = document.getElementById('longtitude').value
@@ -13,6 +16,9 @@ function findTemp() {
    .then(data => displayTemp(data))
 }
 
+/*
+ * Given the weather data, displaty the data in the correct time zone
+*/
 function displayTemp(data) {
    console.log(data)
    let today = new Date();
@@ -26,14 +32,22 @@ function displayTemp(data) {
     * account for GMT -> current time zone by using the offset.
     * since the .getHours() function is corresponds to the temperature
     * 
-    * WARNING: (edge case) before a day and after a day
+    * WARNING: TODO: (edge case) before a day and after a day
    */
    let currentTemp = temp[today.getHours() + hourOffset];
    document.getElementById("currentTemp").innerHTML = currentTemp;
 
    displaySuggestion(currentTemp, tempAvg);
-}
 
+   /* 
+   * TODO: Detect Special Weather: Rain, Snow, etc
+   */
+}tob
+
+/**
+ * Given the currentTemp and averageTemp calcualated in displayTemp(),
+ * we will find the neccessary suggestion for those temperatures 
+ */
 function displaySuggestion(currentTemp, averageTemp) {
    let roundedCurrentTemp = 20 * Math.round(currentTemp / 20); // to nearest even number in the tens
    let roundedAverageTemp = 20 * Math.round(averageTemp / 20);
@@ -45,7 +59,7 @@ function displaySuggestion(currentTemp, averageTemp) {
       + ", Top: "    + topBottom[posCurrent]
       + ", Bottom: " + topBottom[posCurrent];
 
-      document.getElementById("completeSuggestion").innerHTML = "You should wear "
+   document.getElementById("completeSuggestion").innerHTML = "You should wear "
       + "Jacket: "   + jacket[posAverage]
       + ", Top: "    + topBottom[posAverage]
       + ", Bottom: " + topBottom[posAverage];
