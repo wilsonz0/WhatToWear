@@ -1,6 +1,5 @@
-console.log("RUNNING1")
-
-// document.getElementById("submit").addEventListener("click", console.log("CLICKED!"));
+let jacket      = ['heavy', 'medium', 'light', 'light', 'none'];
+let topBottom   = ['thick', 'medium', 'thin', 'short', 'short'];
 
 document.getElementById('submit').addEventListener("click", findTemp)
 
@@ -21,13 +20,33 @@ function displayTemp(data) {
    let temp = data.hourly.temperature_2m
    let tempAvg = temp.reduce((a, b) => a + b) / temp.length
    
-   document.getElementById("averageTemp").innerHTML = tempAvg          // + " " + data.timezone + "+" + (-1*hourOffset)
+   document.getElementById("averageTemp").innerHTML = tempAvg
 
    /* 
     * account for GMT -> current time zone by using the offset.
     * since the .getHours() function is corresponds to the temperature
     * 
-    * edge case: before a day and after a day
+    * WARNING: (edge case) before a day and after a day
    */
-   document.getElementById("currentTemp").innerHTML = temp[ today.getHours() + hourOffset ]
+   let currentTemp = temp[today.getHours() + hourOffset];
+   document.getElementById("currentTemp").innerHTML = currentTemp;
+
+   displaySuggestion(currentTemp, tempAvg);
+}
+
+function displaySuggestion(currentTemp, averageTemp) {
+   let roundedCurrentTemp = 20 * Math.round(currentTemp / 20); // to nearest even number in the tens
+   let roundedAverageTemp = 20 * Math.round(averageTemp / 20);
+   let posCurrent = (roundedCurrentTemp / 20) - 1;
+   let posAverage = (roundedAverageTemp / 20) - 1;
+
+   document.getElementById("currentSuggestion").innerHTML = "You should wear "
+      + "Jacket: "   + jacket[posCurrent]
+      + ", Top: "    + topBottom[posCurrent]
+      + ", Bottom: " + topBottom[posCurrent];
+
+      document.getElementById("completeSuggestion").innerHTML = "You should wear "
+      + "Jacket: "   + jacket[posAverage]
+      + ", Top: "    + topBottom[posAverage]
+      + ", Bottom: " + topBottom[posAverage];
 }
