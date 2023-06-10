@@ -23,8 +23,8 @@ function displayTemp(data) {
    console.log(data)
    let today = new Date();
    let hourOffset = today.getTimezoneOffset() / 60;      // the hours of offset from GMT
-   let localTime = today.getHours() + hourOffset + 24;
-   let temp = data.hourly.temperature_2m
+   let localTime = today.getHours() + hourOffset + 24;   // account for GMT -> user's time zone by using the offset.
+   let temp = data.hourly.temperature_2m 
    let rain = data.hourly.rain
    let shower = data.hourly.showers
    let snowfall = data.hourly.snowfall
@@ -35,7 +35,6 @@ function displayTemp(data) {
    document.getElementById("averageTemp").innerHTML = tempAvg
 
    /* 
-    * account for GMT -> current time zone by using the offset.
     * since the .getHours() function is corresponds to the temperature.
     * The edge case of before and after the current day is handled by fetching
     * the previous day and the next day.
@@ -45,18 +44,11 @@ function displayTemp(data) {
 
    displaySuggestion(currentTemp, tempAvg);
 
-   /* 
-   * TODO: Detect Special Weather: Wind, Rain, Snow, etc
-   * rain: raincoat OR umbrella
-   * rain + wind: raincoat
-   * snow: more cold
-   * snow + wind: super cold
-   */
    let currentRain = rain[localTime];
    let currentShower = shower[localTime];
    let currentSnow = snowfall[localTime];
    let currentWindspeed = windspeed[localTime];
-   console.log("rain: " + currentRain + " shower: " + currentShower + " snow: " + currentSnow + " wind: " + currentWindspeed);
+   displaySpecialSuggestion(currentTemp, currentRain, currentShower, currentSnow, currentWindspeed);
 }
 
 /**
@@ -78,4 +70,36 @@ function displaySuggestion(currentTemp, averageTemp) {
       + "Jacket: "   + jacket[posAverage]
       + ", Top: "    + topBottom[posAverage]
       + ", Bottom: " + topBottom[posAverage];
+}
+
+function displaySpecialSuggestion(currentTemp, currentRain, currentShower, currentSnow, currentWindspeed) {
+   console.log("rain: " + currentRain + " shower: " + currentShower + " snow: " + currentSnow + " wind: " + currentWindspeed);
+   /* 
+   * Detect Special Weather: Rain, Shower, Snow, Wind
+   * rain + shower: raincoat OR umbrella
+   * snow: more cold
+   * wind: might be colder
+   */
+   if (currentRain > 0 || currentShower > 0) {
+      document.getElementById("special").innerHTML = "It seems like there will be rain. "
+      + "Remember to bring a <b>raincoat</b> or <b>umbrella</b>"
+   }
+   if (currentSnow > 0) {
+      document.getElementById("special").innerHTML = "It seems like there will be snow. "
+      + "Remember to wear something extra warm"
+   }
+   if (currentTemp <= 50 && currentWindspeed > 3) {   // 50 F and 3 mph -- NWS
+      document.getElementById("special").innerHTML = "There could be potential wind chills."
+      + "Remember to wear thicker clothings"
+   }
+   /* 
+   * rain + shower: DNE?
+   * rain + snow: terrible weather
+   * rain + wind: raincoat
+   * 
+   * shower + snow: ??
+   * shower + wind: ??
+   * 
+   * snow + wind: super cold
+   */
 }
