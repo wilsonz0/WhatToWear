@@ -11,7 +11,7 @@ function findTemp() {
    let long = document.getElementById('longtitude').value
    console.log(lat + " " + long)
 
-   fetch("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + long + "&hourly=temperature_2m&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&forecast_days=1")
+   fetch("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + long + "&hourly=temperature_2m,precipitation_probability,rain,showers,snowfall,windspeed_10m&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&past_days=1&forecast_days=3")
    .then(response => response.json())
    .then(data => displayTemp(data))
 }
@@ -23,26 +23,41 @@ function displayTemp(data) {
    console.log(data)
    let today = new Date();
    let hourOffset = today.getTimezoneOffset() / 60;      // the hours of offset from GMT
+   let localTime = today.getHours() + hourOffset + 24;
    let temp = data.hourly.temperature_2m
+   let rain = data.hourly.rain
+   let shower = data.hourly.showers
+   let snowfall = data.hourly.snowfall
+   let windspeed = data.hourly.windspeed_10m
    let tempAvg = temp.reduce((a, b) => a + b) / temp.length
+   
    
    document.getElementById("averageTemp").innerHTML = tempAvg
 
    /* 
     * account for GMT -> current time zone by using the offset.
-    * since the .getHours() function is corresponds to the temperature
-    * 
-    * WARNING: TODO: (edge case) before a day and after a day
+    * since the .getHours() function is corresponds to the temperature.
+    * The edge case of before and after the current day is handled by fetching
+    * the previous day and the next day.
    */
-   let currentTemp = temp[today.getHours() + hourOffset];
+   let currentTemp = temp[localTime];
    document.getElementById("currentTemp").innerHTML = currentTemp;
 
    displaySuggestion(currentTemp, tempAvg);
 
    /* 
-   * TODO: Detect Special Weather: Rain, Snow, etc
+   * TODO: Detect Special Weather: Wind, Rain, Snow, etc
+   * rain: raincoat OR umbrella
+   * rain + wind: raincoat
+   * snow: more cold
+   * snow + wind: super cold
    */
-}tob
+   let currentRain = rain[localTime];
+   let currentShower = shower[localTime];
+   let currentSnow = snowfall[localTime];
+   let currentWindspeed = windspeed[localTime];
+   console.log("rain: " + currentRain + " shower: " + currentShower + " snow: " + currentSnow + " wind: " + currentWindspeed);
+}
 
 /**
  * Given the currentTemp and averageTemp calcualated in displayTemp(),
