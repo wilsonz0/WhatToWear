@@ -1,15 +1,21 @@
-let jacket      = ['heavy', 'medium', 'light', 'light', 'none'];
-let topBottom   = ['thick', 'medium', 'thin', 'short', 'short'];
+//                       20        40       60       80 
+let jacket     = ['heavy', 'medium', 'light', 'light', 'none'];
+let topBottom  = ['thick', 'medium', 'thin', 'thin', 'short'];
 
+// Event Listeners
 document.getElementById('submit').addEventListener("click", findTemp)
 
 /* 
- * Given the latitude and longtitude, fetch one day weather data 
+ * Given the latitude and longtitude, fetch 4 day weather data.
+ *
+ * The previous day's weather and 3 days forecast are fetched.
+ * Handles the edge case when a user in a different timezone and need 
+ * the weather in the previous day that is in GMT time.
 */
 function findTemp() {
    let lat = document.getElementById('latitude').value
    let long = document.getElementById('longtitude').value
-   console.log(lat + " " + long)
+   console.log(lat + " " + long);
 
    fetch("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + long + "&hourly=temperature_2m,precipitation_probability,rain,showers,snowfall,windspeed_10m&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&past_days=1&forecast_days=3")
    .then(response => response.json())
@@ -17,7 +23,7 @@ function findTemp() {
 }
 
 /*
- * Given the weather data, displaty the data in the correct time zone
+ * Given the weather data, display the data in the correct time zone
 */
 function displayTemp(data) {
    console.log(data)
@@ -31,17 +37,12 @@ function displayTemp(data) {
    let windspeed = data.hourly.windspeed_10m
    let tempAvg = temp.reduce((a, b) => a + b) / temp.length
    
-   
    document.getElementById("averageTemp").innerHTML = tempAvg
 
-   /* 
-    * since the .getHours() function is corresponds to the temperature.
-    * The edge case of before and after the current day is handled by fetching
-    * the previous day and the next day.
-   */
    let currentTemp = temp[localTime];
    document.getElementById("currentTemp").innerHTML = currentTemp;
 
+   // calls the functions to display the suggestions and special suggestions
    displaySuggestion(currentTemp, tempAvg);
 
    let currentRain = rain[localTime];
@@ -72,25 +73,29 @@ function displaySuggestion(currentTemp, averageTemp) {
       + ", Bottom: " + topBottom[posAverage];
 }
 
+/*
+ * Given the temperature, amount of rain, shower, snow, and the windspeed, it will display
+ * necessary suggestions
+*/
 function displaySpecialSuggestion(currentTemp, currentRain, currentShower, currentSnow, currentWindspeed) {
    console.log("rain: " + currentRain + " shower: " + currentShower + " snow: " + currentSnow + " wind: " + currentWindspeed);
    /* 
-   * Detect Special Weather: Rain, Shower, Snow, Wind
-   * rain + shower: raincoat OR umbrella
+   * Detect Special Weather
+   * rain OR shower: raincoat OR umbrella (to generalize only rain/shower >0.1 inch will be detected)
    * snow: more cold
    * wind: might be colder
    */
-   if (currentRain > 0 || currentShower > 0) {
+   if (currentRain > 0.1 || currentShower > 0.1) {
       document.getElementById("special").innerHTML = "It seems like there will be rain. "
-      + "Remember to bring a <b>raincoat</b> or <b>umbrella</b>"
+      + " Remember to bring a <b>raincoat</b> or <b>umbrella</b>"
    }
    if (currentSnow > 0) {
       document.getElementById("special").innerHTML = "It seems like there will be snow. "
-      + "Remember to wear something extra warm"
+      + " Remember to wear something extra warm"
    }
    if (currentTemp <= 50 && currentWindspeed > 3) {   // 50 F and 3 mph -- NWS
       document.getElementById("special").innerHTML = "There could be potential wind chills."
-      + "Remember to wear thicker clothings"
+      + " Remember to wear thicker clothings"
    }
    /* 
    * rain + shower: DNE?
