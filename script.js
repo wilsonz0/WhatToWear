@@ -78,6 +78,12 @@ function displaySuggestion(currentTemp, averageTemp) {
  * necessary suggestions
 */
 function displaySpecialSuggestion(currentTemp, currentRain, currentShower, currentSnow, currentWindspeed) {
+   // TESTING START
+   // currentRain = 1;
+   // currentSnow = 1;
+   // currentWindspeed = 20;
+   // TESTING END
+
    console.log("rain: " + currentRain + " shower: " + currentShower + " snow: " + currentSnow + " wind: " + currentWindspeed);
    /* 
    * Detect Special Weather
@@ -86,25 +92,38 @@ function displaySpecialSuggestion(currentTemp, currentRain, currentShower, curre
    * wind: might be colder
    */
    if (currentRain > 0.1 || currentShower > 0.1) {
-      document.getElementById("special").innerHTML = "It seems like there will be rain. "
-      + " Remember to bring a <b>raincoat</b> or <b>umbrella</b>"
+      document.getElementById("special").innerHTML = " There could be some rain. "
+      + "Remember to wear a <b>water-resistant jacket</b> or bring a <b>raincoat</b>, <b>umbrella</b>."
    }
    if (currentSnow > 0) {
-      document.getElementById("special").innerHTML = "It seems like there will be snow. "
-      + " Remember to wear something extra warm"
+      document.getElementById("special").innerHTML = "There could be some snow. "
+      + "Remember to wear something <b>extra warm</b>."
    }
    if (currentTemp <= 50 && currentWindspeed > 3) {   // 50 F and 3 mph -- NWS
-      document.getElementById("special").innerHTML = "There could be potential wind chills."
-      + " Remember to wear thicker clothings"
+      document.getElementById("special").innerHTML = "There could be some wind chills. "
+      + "Remember to wear <b>thicker clothings</b>."
    }
+
    /* 
-   * rain + shower: DNE?
    * rain + snow: terrible weather
    * rain + wind: raincoat
-   * 
+   */
+  if (currentRain > 0.1 && currentSnow > 0.1) {
+   document.getElementById("special").innerHTML = "There could be rain and snow. "
+   + "Remember to wear a <b>thick water-resistant jacket</b>."
+  }
+
+  if (currentRain > 0.1 && currentWindspeed > 15) {
+   document.getElementById("special").innerHTML = "There could be rain with strong wind. "
+   + "Remember to wear <b>raincoat</b>."
+  }
+   
+  /* 
    * shower + snow: ??
    * shower + wind: ??
    * 
    * snow + wind: super cold
+   * 
+   * rain + snow + wind: really bad
    */
 }
