@@ -108,22 +108,21 @@ function displaySpecialSuggestion(currentTemp, currentRain, currentShower, curre
    * rain + snow: terrible weather
    * rain + wind: raincoat
    */
-  if (currentRain > 0.1 && currentSnow > 0.1) {
-   document.getElementById("special").innerHTML = "There could be rain and snow. "
+  if ( (currentRain > 0.1 || currentShower > 0.3) && currentSnow > 0.1) {
+   document.getElementById("special").innerHTML = "There could be some rain and snow. "
    + "Remember to wear a <b>thick water-resistant jacket</b>."
   }
 
-  if (currentRain > 0.1 && currentWindspeed > 15) {
-   document.getElementById("special").innerHTML = "There could be rain with strong wind. "
+  if ( (currentRain > 0.1 || currentShower > 0.3) && currentWindspeed > 15) {
+   document.getElementById("special").innerHTML = "There could be some rain with strong wind. "
    + "Remember to wear <b>raincoat</b>."
   }
    
   /* 
-   * shower + snow: ??
-   * shower + wind: ??
-   * 
    * snow + wind: super cold
-   * 
-   * rain + snow + wind: really bad
    */
+  if (currentSnow > 0.1 && currentWindspeed > 3) {
+   document.getElementById("special").innerHTML = "There could be some snow with chilly wind. "
+      + "Remember to wear <b>layer thick clothings</b>."
+  }
 }
