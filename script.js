@@ -38,6 +38,9 @@ function displayTemp(data) {
    let windspeed = data.hourly.windspeed_10m;
 
    // display the average and the current temperatures
+   /*
+    * TODO: (BUG) this takes in every day in the temp array including all 4 days
+   */
    let tempAvg = temp.reduce((a, b) => a + b) / temp.length;
    document.getElementById("averageTemp").innerHTML = tempAvg.toFixed(1);
 
@@ -64,15 +67,13 @@ function displaySuggestion(currentTemp, averageTemp) {
    let posCurrent = roundedCurrentTemp / 20 - 1;
    let posAverage = roundedAverageTemp / 20 - 1;
 
-   document.getElementById("currentSuggestion").innerHTML = "You should wear " 
-   + "Jacket: " + jacket[posCurrent] 
-   + ", Top: " + topBottom[posCurrent] 
-   + ", Bottom: " + topBottom[posCurrent];
+   document.getElementById("currentSuggestion").innerHTML = "Jacket: " + jacket[posCurrent] 
+   + "<br> Top: " + topBottom[posCurrent] 
+   + "<br> Bottom: " + topBottom[posCurrent];
 
-   document.getElementById("completeSuggestion").innerHTML = "You should wear " 
-   + "Jacket: " + jacket[posAverage] 
-   + ", Top: " + topBottom[posAverage] 
-   + ", Bottom: " + topBottom[posAverage];
+   document.getElementById("completeSuggestion").innerHTML = "Jacket: " + jacket[posAverage] 
+   + "<br> Top: " + topBottom[posAverage] 
+   + "<br> Bottom: " + topBottom[posAverage];
 }
 
 /*
