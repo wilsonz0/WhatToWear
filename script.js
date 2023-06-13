@@ -39,10 +39,10 @@ function displayTemp(data) {
 
    // display the average and the current temperatures
    let tempAvg = temp.reduce((a, b) => a + b) / temp.length;
-   document.getElementById("averageTemp").innerHTML = tempAvg;
+   document.getElementById("averageTemp").innerHTML = tempAvg.toFixed(1);
 
    let currentTemp = temp[localTime];
-   document.getElementById("currentTemp").innerHTML = currentTemp;
+   document.getElementById("currentTemp").innerHTML = currentTemp.toFixed(1);
 
    // calls the functions to display the suggestions and special suggestions
    displaySuggestion(currentTemp, tempAvg);
