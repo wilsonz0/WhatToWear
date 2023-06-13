@@ -6,7 +6,7 @@ let topBottom = ["thick", "medium", "thin", "thin", "short"];
 document.getElementById("submit").addEventListener("click", findTemp);
 
 /*
- * Given the latitude and longtitude, fetch 4 day weather data.
+ * Given the latitude and longitude, fetch 4 day weather data.
  *
  * The previous day's weather and 3 days forecast are fetched.
  * Handles the edge case when a user in a different timezone and need
@@ -14,7 +14,7 @@ document.getElementById("submit").addEventListener("click", findTemp);
  */
 function findTemp() {
    let lat = document.getElementById("latitude").value;
-   let long = document.getElementById("longtitude").value;
+   let long = document.getElementById("longitude").value;
    console.log(lat + " " + long);
 
    fetch("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + long + "&hourly=temperature_2m,precipitation_probability,rain,showers,snowfall,windspeed_10m&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&past_days=1&forecast_days=3")
