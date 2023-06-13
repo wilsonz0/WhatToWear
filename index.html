@@ -6,32 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What To Wear</title>
 
-    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>What To Wear</h1>
-    <!-- <label for="location">Location:</label> -->
-    Latitude:
-    <input type="text" id="latitude" name="latitude"> <br>
-    Longtitude:
-    <input type="text" id="longtitude" name="longtitude"> <br>
-    <input type="submit" id="submit" value="Submit">
-    <!-- Allow both selection of location AND detection of location -->
-
-    <br><br>
-    Current Temperature: <span id="currentTemp"></span>
-
-    <br>
-    For the current temperature wear: 
-    <div id="currentSuggestion"></div>
-
-    <br>
-    Average Temperature: <span id="averageTemp"></span>
-
-    <br>
-    For the whole day wear: <p id="completeSuggestion"></p>
-
-    <div id="special"></div> 
+    <div id="location">
+        <div id="latitudeBox">
+            Latitude: <br>
+            <input type="text" id="latitude" name="latitude">
+        </div>
+        <div id="longitudeBox">
+            Longitude: <br>
+            <input type="text" id="longitude" name="longitude">
+        </div>
+        <br> 
+        <input type="submit" id="submit" value="Submit">
+    </div>
+    
+    <div id="weatherContent">
+        <div id="averageTempBox">
+            Average Temperature: <span id="averageTemp"></span>
+    
+            <br>
+            For the whole day wear: <p id="completeSuggestion"></p>
+            
+            <div id="special"></div> 
+    
+        </div>
+        <div id="currentTempBox">
+            Current Temperature: <span id="currentTemp"></span>
+    
+            <br>
+            For the current temperature wear: 
+            <div id="currentSuggestion"></div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

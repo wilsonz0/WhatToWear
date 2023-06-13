@@ -1,0 +1,30 @@
+h1 {
+    text-align: center;
+}
+
+#location {
+    width: fit-content;
+    margin-inline: auto;
+    display: block;
+}
+
+#latitudeBox {
+    float: left;
+}
+
+#longitudeBox {
+    float: right;
+}
+
+#submit {
+    width: 100%;
+}
+
+#weatherContent {
+}
+
+#averageTempBox, #currentTempBox {
+    float: left;
+    width: 50%;
+    margin: auto;
+}
