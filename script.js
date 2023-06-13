@@ -38,10 +38,7 @@ function displayTemp(data) {
    let windspeed = data.hourly.windspeed_10m;
 
    // display the average and the current temperatures
-   /*
-    * TODO: (BUG) this takes in every day in the temp array including all 4 days
-   */
-   let tempAvg = temp.reduce((a, b) => a + b) / temp.length;
+   let tempAvg = temp.slice(24).reduce((a, b) => a + b) / temp.length;
    document.getElementById("averageTemp").innerHTML = tempAvg.toFixed(1);
 
    let currentTemp = temp[localTime];
