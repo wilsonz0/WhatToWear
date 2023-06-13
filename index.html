@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What To Wear</title>
-    
+
     <link href='https://fonts.googleapis.com/css?family=Gotu' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>What To Wear</h1>
+    <h1 class="center">What To Wear</h1>
     <div id="location">
         <div id="latitudeBox">
             Latitude: <br>
@@ -26,20 +26,26 @@
     
     <div id="weatherContent">
         <div id="averageTempBox">
-            Average Temperature: <span id="averageTemp"></span>
+            <h2 class="center">Average Temperature</h2>
+            <p class="center">(if you are going out for the whole day)</p>
+            <h2 id="averageTemp" class="center"></h2>
     
             <br>
-            For the whole day wear: <p id="completeSuggestion"></p>
+            <h2 class="center">Recommended Style</h2>
+            <p id="completeSuggestion" class="center"></p>
 
-            <div id="special"></div> 
+            <br>
+            <div id="special" class="center"></div> 
     
         </div>
         <div id="currentTempBox">
-            Current Temperature: <span id="currentTemp"></span>
+            <h2 class="center">Current Temperature</h2> 
+            <p class="center">(if you are going out briefly)</p>
+            <h2 id="currentTemp" class="center"></h2>
     
             <br>
-            For the current temperature wear: 
-            <div id="currentSuggestion"></div>
+            <h2 class="center">Recommended Style</h2>
+            <div id="currentSuggestion" class="center"></div>
         </div>
     </div>
 

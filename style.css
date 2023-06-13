@@ -1,8 +1,10 @@
 *{
     font-family: "Gotu";
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
+.center {
     text-align: center;
 }
 
@@ -22,9 +24,6 @@ h1 {
 
 #submit {
     width: 100%;
-}
-
-#weatherContent {
 }
 
 #averageTempBox, #currentTempBox {
