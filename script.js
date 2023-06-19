@@ -92,15 +92,15 @@ function displaySpecialSuggestion(currentTemp, currentRain, currentShower, curre
     * wind: might be colder
     */
    if (currentRain > 0.1 || currentShower > 0.1) {
-      document.getElementById("averageSpecial").innerHTML = " There could be some rain. " 
+      document.getElementById("currentSpecial").innerHTML = " There could be some rain. " 
       + "Remember to wear a <b>water-resistant jacket</b> or bring a <b>raincoat</b>, <b>umbrella</b>.";
    }
    if (currentSnow > 0) {
-      document.getElementById("averageSpecial").innerHTML = "There could be some snow. " 
+      document.getElementById("currentSpecial").innerHTML = "There could be some snow. " 
       + "Remember to wear something <b>extra warm</b>.";
    }
    if (currentTemp <= 50 && currentWindspeed > 3) {
-      document.getElementById("averageSpecial").innerHTML = "There could be some wind chills. " 
+      document.getElementById("currentSpecial").innerHTML = "There could be some wind chills. " 
       + "Remember to wear <b>thicker clothings</b>.";
    }
 
@@ -109,18 +109,18 @@ function displaySpecialSuggestion(currentTemp, currentRain, currentShower, curre
     * rain + wind: raincoat
     */
    if ((currentRain > 0.1 || currentShower > 0.3) && currentSnow > 0.1) {
-      document.getElementById("averageSpecial").innerHTML = "There could be some rain and snow. " 
+      document.getElementById("currentSpecial").innerHTML = "There could be some rain and snow. " 
       + "Remember to wear a <b>thick water-resistant jacket</b>.";
    }
 
    if ((currentRain > 0.1 || currentShower > 0.3) && currentWindspeed > 15) {
-      document.getElementById("averageSpecial").innerHTML = "There could be some rain with strong wind. " 
+      document.getElementById("currentSpecial").innerHTML = "There could be some rain with strong wind. " 
       + "Remember to wear <b>raincoat</b>.";
    }
 
    // snow + wind: super cold
    if (currentSnow > 0.1 && currentWindspeed > 3) {
-      document.getElementById("averageSpecial").innerHTML = "There could be some snow with chilly wind. " 
+      document.getElementById("currentSpecial").innerHTML = "There could be some snow with chilly wind. " 
       + "Remember to wear <b>layer thick clothings</b>.";
    }
 }
